@@ -19,10 +19,12 @@ class NasiMailServiceProvider extends ServiceProvider
         $transportClass = self::resolveTransportClass();
 
         if ($transportClass !== null) {
-            $this->app->afterResolving('mail.manager', static function ($manager) use ($transportClass): void {
-                $manager->extend('nasimail', static function (array $config) use ($transportClass) {
-                    return new $transportClass($config);
-                });
+            if ($this->app->resolved('mail.manager')) {
+                $this->registerMailTransport($this->app->make('mail.manager'), $transportClass);
+            }
+
+            $this->app->afterResolving('mail.manager', function ($manager) use ($transportClass): void {
+                $this->registerMailTransport($manager, $transportClass);
             });
         }
     }
@@ -57,5 +59,16 @@ class NasiMailServiceProvider extends ServiceProvider
         ];
 
         $this->app['config']->set('mail.mailers.nasimail', array_replace($defaults, $existing));
+    }
+
+    protected function registerMailTransport(object $manager, string $transportClass): void
+    {
+        if (! method_exists($manager, 'extend')) {
+            return;
+        }
+
+        $manager->extend('nasimail', static function (array $config) use ($transportClass) {
+            return new $transportClass($config);
+        });
     }
 }
