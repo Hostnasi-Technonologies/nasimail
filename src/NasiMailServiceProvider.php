@@ -15,19 +15,21 @@ class NasiMailServiceProvider extends ServiceProvider
         $this->app->singleton(NasiMailClient::class, static function (): NasiMailClient {
             return new NasiMailClient();
         });
+
+        $transportClass = self::resolveTransportClass();
+
+        if ($transportClass !== null) {
+            $this->app->afterResolving('mail.manager', static function ($manager) use ($transportClass): void {
+                $manager->extend('nasimail', static function (array $config) use ($transportClass) {
+                    return new $transportClass($config);
+                });
+            });
+        }
     }
 
     public function boot(): void
     {
         $this->registerDefaultMailerConfig();
-
-        $transportClass = self::resolveTransportClass();
-
-        if ($transportClass !== null) {
-            $this->app->make('mail.manager')->extend('nasimail', static function (array $config) use ($transportClass) {
-                return new $transportClass($config);
-            });
-        }
 
         $this->publishes([
             __DIR__ . '/../config/nasimail-client.php' => $this->app->configPath('nasimail-client.php'),
