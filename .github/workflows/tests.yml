@@ -45,13 +45,25 @@ jobs:
 
       - name: Install dependencies
         run: |
-          composer require --no-interaction --no-update \
+          composer require --no-interaction \
             "illuminate/support:^${{ matrix.laravel }}" \
             "illuminate/http:^${{ matrix.laravel }}" \
             "illuminate/mail:^${{ matrix.laravel }}" \
+            --with-all-dependencies \
+            --prefer-dist \
+            --no-progress \
+            --no-security-blocking
+
+          composer require --no-interaction \
             "phpunit/phpunit:${{ matrix.phpunit }}" \
-            --dev
-          composer update --no-interaction --prefer-dist --no-progress --with-all-dependencies --no-security-blocking
+            --dev \
+            --with-all-dependencies \
+            --prefer-dist \
+            --no-progress \
+            --no-security-blocking
+
+      - name: Rebuild autoload
+        run: composer dump-autoload --optimize --no-interaction
 
       - name: Run tests
         run: ./vendor/bin/phpunit --configuration phpunit.xml
