@@ -19,6 +19,8 @@ class NasiMailServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
+        $this->registerDefaultMailerConfig();
+
         $transportClass = self::resolveTransportClass();
 
         if ($transportClass !== null) {
@@ -39,5 +41,19 @@ class NasiMailServiceProvider extends ServiceProvider
         }
 
         return null;
+    }
+
+    protected function registerDefaultMailerConfig(): void
+    {
+        $existing = (array) $this->app['config']->get('mail.mailers.nasimail', []);
+
+        $defaults = [
+            'transport' => 'nasimail',
+            'base_url' => env('NASIMAIL_BASE_URL', ''),
+            'secret_key' => env('NASIMAIL_SECRET_KEY', ''),
+            'timeout' => (int) env('NASIMAIL_TIMEOUT', 10),
+        ];
+
+        $this->app['config']->set('mail.mailers.nasimail', array_replace($defaults, $existing));
     }
 }

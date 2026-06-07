@@ -88,6 +88,21 @@ NASIMAIL_BASE_URL=https://nasimail.hostnasi.com
 NASIMAIL_SECRET_KEY=sk_live_xxx
 ```
 
+The package now registers a default `mail.mailers.nasimail` entry automatically.
+If your app overrides `config/mail.php`, you can add this explicitly:
+
+```php
+'mailers' => [
+  // ...
+  'nasimail' => [
+    'transport' => 'nasimail',
+    'base_url' => env('NASIMAIL_BASE_URL'),
+    'secret_key' => env('NASIMAIL_SECRET_KEY'),
+    'timeout' => env('NASIMAIL_TIMEOUT', 10),
+  ],
+],
+```
+
 ## Usage
 
 ```php
@@ -99,4 +114,24 @@ $response = app(NasiMailClient::class)->send([
     'subject' => 'Hello',
     'text' => 'Hi there',
 ]);
+```
+
+## Troubleshooting
+
+If you see `Mailer [nasimail] is not defined`:
+
+1. Ensure the package service provider is loaded.
+2. Ensure `.env` includes:
+
+```dotenv
+MAIL_MAILER=nasimail
+NASIMAIL_BASE_URL=https://nasimail.hostnasi.com
+NASIMAIL_SECRET_KEY=sk_live_xxx
+```
+
+3. Clear cached configuration:
+
+```bash
+php artisan config:clear
+php artisan cache:clear
 ```
