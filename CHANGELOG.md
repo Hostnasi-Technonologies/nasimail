@@ -2,6 +2,14 @@
 
 All notable changes to `nasimail/laravel-client` are documented in this file.
 
+## [Unreleased]
+
+### Added
+
+- PHPUnit test suite scaffold and unit tests for `NasiMailClient` validation paths.
+- GitHub Actions workflow at `.github/workflows/tests.yml` to run tests on push and pull requests.
+- Composer dependency caching in CI for faster workflow runs.
+
 ## [1.0.0] - 2026-06-07
 
 ### Added

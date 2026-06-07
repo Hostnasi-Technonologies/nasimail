@@ -80,6 +80,22 @@ Mail::raw('Hello from nasimail transport', function ($message) {
 });
 ```
 
+## Testing and CI
+
+### Local tests
+
+```bash
+composer install
+./vendor/bin/phpunit
+```
+
+### GitHub Actions
+
+- Workflow file: `.github/workflows/tests.yml`
+- Triggers: push and pull request
+- Matrix: PHP 8.2, 8.3, and 8.4
+- Includes Composer cache to speed up dependency installation
+
 ## Behavior Notes
 
 - `MAIL_MAILER=log` writes emails to logs and does not deliver externally.

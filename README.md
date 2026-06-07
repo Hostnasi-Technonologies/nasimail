@@ -1,5 +1,7 @@
 # NasiMail Laravel Client (Local Package)
 
+[![Tests](https://github.com/Hostnasi-Technonologies/nasimail/actions/workflows/tests.yml/badge.svg)](https://github.com/Hostnasi-Technonologies/nasimail/actions/workflows/tests.yml)
+
 This package provides a Laravel client with two delivery drivers:
 
 - `api`: send messages to a NasiMail API instance via HTTP.
@@ -9,6 +11,17 @@ This package provides a Laravel client with two delivery drivers:
 
 - Changelog: `CHANGELOG.md`
 - Wiki: `WIKI.md`
+
+## Testing
+
+Run tests locally:
+
+```bash
+composer install
+./vendor/bin/phpunit
+```
+
+CI runs the same tests on GitHub Actions for PHP 8.2, 8.3, and 8.4.
 
 ## Install in this monorepo
 
