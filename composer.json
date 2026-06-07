@@ -1,6 +1,5 @@
 {
   "name": "nasimail/laravel-client",
-  "version": "1.0.0",
   "description": "Laravel client package for NasiMail with API and Laravel Mail drivers.",
   "type": "library",
   "license": "MIT",

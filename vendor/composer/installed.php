@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'nasimail/laravel-client',
-        'pretty_version' => '1.0.0',
-        'version' => '1.0.0.0',
-        'reference' => null,
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
+        'reference' => '1218cf9dffd8d894420fa0bbc385f36755840973',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -227,9 +227,9 @@
             'dev_requirement' => true,
         ),
         'nasimail/laravel-client' => array(
-            'pretty_version' => '1.0.0',
-            'version' => '1.0.0.0',
-            'reference' => null,
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
+            'reference' => '1218cf9dffd8d894420fa0bbc385f36755840973',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
