@@ -19,13 +19,25 @@ class NasiMailServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        $this->app->make('mail.manager')->extend('nasimail', static function (array $config) {
-            $transportClass = __NAMESPACE__ . '\\Mail\\NasiMailTransport';
-            return new $transportClass($config);
-        });
+        $transportClass = self::resolveTransportClass();
+
+        if ($transportClass !== null) {
+            $this->app->make('mail.manager')->extend('nasimail', static function (array $config) use ($transportClass) {
+                return new $transportClass($config);
+            });
+        }
 
         $this->publishes([
-            __DIR__ . '/../config/nasimail-client.php' => config_path('nasimail-client.php'),
+            __DIR__ . '/../config/nasimail-client.php' => $this->app->configPath('nasimail-client.php'),
         ], 'nasimail-client-config');
+    }
+
+    protected static function resolveTransportClass(): ?string
+    {
+        if (class_exists(\Symfony\Component\Mailer\Transport\AbstractTransport::class)) {
+            return __NAMESPACE__ . '\\Mail\\NasiMailTransport';
+        }
+
+        return null;
     }
 }

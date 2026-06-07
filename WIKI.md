@@ -13,11 +13,16 @@ It also registers a custom mailer transport named `nasimail`, so you can use:
 MAIL_MAILER=nasimail
 ```
 
+Supported Laravel versions: 8.x to 12.x.
+
+Note: the custom `MAIL_MAILER=nasimail` transport is available on Laravel 9+.
+On Laravel 8, use `NasiMailClient` with `NASIMAIL_DRIVER=api` or `NASIMAIL_DRIVER=mail`.
+
 ## Folder Structure
 
 - `src/NasiMailClient.php`: main client API.
 - `src/NasiMailServiceProvider.php`: service provider and transport registration.
-- `src/Mail/NasiMailTransport.php`: custom Symfony transport for Laravel mailer.
+- `src/Mail/NasiMailTransport.php`: Symfony mail transport (Laravel 9+).
 - `config/nasimail-client.php`: package config.
 
 ## Configuration
@@ -93,7 +98,12 @@ composer install
 
 - Workflow file: `.github/workflows/tests.yml`
 - Triggers: push and pull request
-- Matrix: PHP 8.2, 8.3, and 8.4
+- Matrix:
+    - Laravel 8.83 on PHP 8.1
+    - Laravel 9.52 on PHP 8.1
+    - Laravel 10.48 on PHP 8.2
+    - Laravel 11.x on PHP 8.3
+    - Laravel 12.x on PHP 8.4
 - Includes Composer cache to speed up dependency installation
 
 ## Behavior Notes

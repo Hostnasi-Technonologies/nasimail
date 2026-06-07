@@ -7,6 +7,11 @@ This package provides a Laravel client with two delivery drivers:
 - `api`: send messages to a NasiMail API instance via HTTP.
 - `mail`: send using Laravel's mail transport (`MAIL_MAILER`, etc.).
 
+Supported Laravel versions: 8.x to 12.x.
+
+Note: the custom `MAIL_MAILER=nasimail` transport is available on Laravel 9+.
+On Laravel 8, use the package `api` or `mail` driver via `NasiMailClient`.
+
 ## Docs
 
 - Changelog: `CHANGELOG.md`
@@ -21,7 +26,13 @@ composer install
 ./vendor/bin/phpunit
 ```
 
-CI runs the same tests on GitHub Actions for PHP 8.2, 8.3, and 8.4.
+CI validates Laravel 8 through 12 with a PHP/Laravel matrix:
+
+- Laravel 8.83 on PHP 8.1
+- Laravel 9.52 on PHP 8.1
+- Laravel 10.48 on PHP 8.2
+- Laravel 11.x on PHP 8.3
+- Laravel 12.x on PHP 8.4
 
 ## Install in this monorepo
 
